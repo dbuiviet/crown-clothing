@@ -1,16 +1,16 @@
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/auth';
+import firebase from "firebase/app";
+import "firebase/firestore";
+import "firebase/auth";
 
 const config = {
-    apiKey: "AIzaSyDt0ispMg8CjmirumHYYIrjgNl9u7HZ8T4",
-    authDomain: "crown-db-86c6f.firebaseapp.com",
-    databaseURL: "https://crown-db-86c6f.firebaseio.com",
-    projectId: "crown-db-86c6f",
-    storageBucket: "crown-db-86c6f.appspot.com",
-    messagingSenderId: "163478799921",
-    appId: "1:163478799921:web:70a92734b1369f495f7710",
-    measurementId: "G-CPN0MZHSGY"
+  apiKey: "AIzaSyDt0ispMg8CjmirumHYYIrjgNl9u7HZ8T4",
+  authDomain: "crown-db-86c6f.firebaseapp.com",
+  databaseURL: "https://crown-db-86c6f.firebaseio.com",
+  projectId: "crown-db-86c6f",
+  storageBucket: "crown-db-86c6f.appspot.com",
+  messagingSenderId: "163478799921",
+  appId: "1:163478799921:web:70a92734b1369f495f7710",
+  measurementId: "G-CPN0MZHSGY"
 };
 
 firebase.initializeApp(config);
@@ -19,7 +19,7 @@ export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
 const provider = new firebase.auth.GoogleAuthProvider();
-provider.setCustomParameters({ prompt: 'select_account' });
+provider.setCustomParameters({ prompt: "select_account" });
 
 export const signInWithGoogle = () => auth.signInWithPopup(provider);
 
