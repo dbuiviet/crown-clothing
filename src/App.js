@@ -4,7 +4,7 @@ import Homepage from "./pages/homepage/homepage.cpn";
 import ShopPage from "./pages/shop/shop.cpn";
 import Header from "./components/header/header.cpn";
 import SignInSignUpPage from "./pages/sign-in-sign-up/sign-in-sign-up.cpn";
-import { auth } from "./firebase/firebase.utils";
+import { auth, createUserProfileDoc } from "./firebase/firebase.utils";
 
 import { Route, Switch } from "react-router-dom";
 
@@ -20,9 +20,28 @@ class App extends React.Component {
   exitFromAuth = null;
 
   componentDidMount() {
-    this.exitFromAuth = auth.onAuthStateChanged(user => {
-      this.setState({ currentUser: user });
-      console.log(user);
+    this.exitFromAuth = auth.onAuthStateChanged(async userAuth => {
+      //   this.setState({ currentUser: user });
+      if (userAuth) {
+        const userRef = await createUserProfileDoc(userAuth);
+
+        userRef.onSnapshot(snapShot => {
+          this.setState(
+            {
+              currentUser: {
+                id: snapShot.id,
+                ...snapShot.data()
+              }
+            },
+            () => {
+              console.log(this.state); //due to asynchronous call in setState
+            }
+          );
+        });
+      } else {
+        this.setState({ currentUser: userAuth });
+      }
+      //console.log(this.state);
     });
   }
 
